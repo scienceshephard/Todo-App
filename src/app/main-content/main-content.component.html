@@ -1,0 +1,31 @@
+<nav>
+    <a class="logo" href="/">Welcome</a>
+    <button type="button" (click)="showAddList()">Add List</button>
+</nav>
+
+<div class="addlistContainer">
+    @if (showaddlist) {
+        <input type="text" [(ngModel)]="newListTitle" placeholder="Title" name="Title">
+        <input type="text" width="20" placeholder="Content" [(ngModel)]="newListContent" name="content">
+        <button (click)="addList()">Add</button>
+    }
+</div>
+        @for (list of List; track $index) {
+            <div class="todoList">
+        @if (list.title!="") {
+            <h1>{{"Title: " + list.title }}</h1>
+        }@else {
+            <h1>No Title </h1>
+        }
+        @if (list.content!="") {
+            <p>{{list.content }}</p>
+        }@else{
+            <p>Nothing here 😑😑</p>
+        }
+    <button type="button" (click)="deleteList($index)">Delete List</button>
+    </div>
+
+}
+@if ( deleteClicked && List.length==0) {
+   <p class="todoList">No more list 😎😎</p>
+}

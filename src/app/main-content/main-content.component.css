@@ -1,0 +1,61 @@
+.logo{
+    font-weight: 600;
+    color: blue;
+    font-size: xx-large;
+    text-decoration: none;
+}
+nav{
+    display: flex;
+    width: 75vw;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 10px 20px 10px;
+    border-bottom: 3px solid #dce6e2;
+    border-radius: 100px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+button{
+    background-color: #2bd1b591;
+    font-size: 1.2rem;
+    padding: 20px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: fit-content;
+}
+button:hover{
+    background-color: aqua;
+}
+input[type="text"]{
+    outline: none;
+    padding: 10px;
+    font-size: 14px;
+    color: rgb(150, 150, 185);
+    font-weight: 700;
+}
+.addlistContainer{
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.todoList{
+    display: flex;
+    flex-direction: column;
+    margin-right: auto;
+    margin-left: auto;
+    width: 75vw;
+}
+.todoList p{
+    font-size: larger;
+    font-family: 'Gill Sans', Calibri, 'Trebuchet MS', monospace;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+.todoList button{
+    margin-left: auto;
+}
