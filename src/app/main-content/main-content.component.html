@@ -1,31 +1,110 @@
-<nav>
-    <a class="logo" href="/">Welcome</a>
-    <button type="button" (click)="showAddList()">Add List</button>
-</nav>
+<!-- HEADER -->
+<header class="header" #header>
+  <div class="header-inner">
+    <div class="logo"><em>Tasks</em></div>
+    <div class="header-date">{{ today }}</div>
+  </div>
+</header>
 
-<div class="addlistContainer">
-    @if (showaddlist) {
-        <input type="text" [(ngModel)]="newListTitle" placeholder="Title" name="Title">
-        <input type="text" width="20" placeholder="Content" [(ngModel)]="newListContent" name="content">
-        <button (click)="addList()">Add</button>
-    }
-</div>
-        @for (list of List; track $index) {
-            <div class="todoList">
-        @if (list.title!="") {
-            <h1>{{"Title: " + list.title }}</h1>
-        }@else {
-            <h1>No Title </h1>
+<!-- HERO -->
+<section class="hero" #hero>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Today's Focus</div>
+    <div class="hero-counter" #heroCounter>{{ displayCount.toString().padStart(2, '0') }}</div>
+    <div class="hero-sub" #heroSub>
+      {{ activeCount }} task{{ activeCount !== 1 ? 's' : '' }} remaining
+      @if (completedCount > 0) {
+        · {{ completedCount }} completed
+      }
+    </div>
+  </div>
+</section>
+
+<!-- TASK LIST -->
+<main class="task-list">
+
+  <!-- ACTIVE DIVIDER -->
+  <div class="divider">
+    <div class="divider-line" #dividerLine></div>
+    <span class="divider-label"><em>Active</em></span>
+    <div class="divider-line" #dividerLine></div>
+  </div>
+
+  <!-- EMPTY STATE -->
+  @if (activeTasks.length === 0) {
+    <div class="empty-state">
+      <span>Nothing here — add a task below</span>
+    </div>
+  }
+
+  <!-- ACTIVE ROWS -->
+  @for (task of activeTasks; track task; let i = $index) {
+    <div class="task-row" #activeRow [class.completing]="task.completing">
+      <span class="task-num">{{ (i + 1).toString().padStart(2, '0') }}</span>
+      <div class="task-body" (click)="completeTask(i)">
+        <div class="task-title">
+          {{ task.title || 'Untitled' }}
+          <span class="strikethrough"></span>
+        </div>
+        @if (task.content) {
+          <div class="task-note">{{ task.content }}</div>
         }
-        @if (list.content!="") {
-            <p>{{list.content }}</p>
-        }@else{
-            <p>Nothing here 😑😑</p>
-        }
-    <button type="button" (click)="deleteList($index)">Delete List</button>
+      </div>
+      <div class="task-meta-group">
+        <button class="task-delete" (click)="$event.stopPropagation(); deleteList(i)">×</button>
+      </div>
+    </div>
+  }
+
+  <!-- DONE SECTION -->
+  @if (completedTasks.length > 0) {
+    <div class="divider">
+      <div class="divider-line" #dividerLine></div>
+      <span class="divider-label"><em>Done</em></span>
+      <div class="divider-line" #dividerLine></div>
     </div>
 
-}
-@if ( deleteClicked && List.length==0) {
-   <p class="todoList">No more list 😎😎</p>
-}
+    @for (task of completedTasks; track task) {
+      <div class="task-row task-row--done">
+        <span class="task-num">—</span>
+        <div class="task-body">
+          <div class="task-title task-title--done">{{ task.title || 'Untitled' }}</div>
+          @if (task.content) {
+            <div class="task-note task-note--done">{{ task.content }}</div>
+          }
+        </div>
+      </div>
+    }
+  }
+
+</main>
+
+<!-- OVERLAY -->
+<div class="overlay" #overlay (click)="closeSheet()"></div>
+
+<!-- ADD TASK SHEET -->
+<div class="sheet" #sheet>
+  <button class="sheet-close" (click)="closeSheet()">×</button>
+  <input
+    #titleInput
+    type="text"
+    class="sheet-title-input"
+    [(ngModel)]="newListTitle"
+    placeholder="Task title…"
+    (keydown.enter)="addList()"
+  >
+  <input
+    type="text"
+    class="sheet-note-input"
+    [(ngModel)]="newListContent"
+    placeholder="Add a note…"
+    (keydown.enter)="addList()"
+  >
+  <button class="sheet-add-btn" (click)="addList()">Add Task</button>
+</div>
+
+<!-- BOTTOM ACTION BAR -->
+<div class="bottom-bar" #bottomBar (click)="toggleSheet()">
+  <span class="bottom-bar-label" #barLabel>New Task</span>
+  <span class="bottom-bar-plus" #barPlus>+</span>
+</div>

@@ -1,61 +1,402 @@
-.logo{
-    font-weight: 600;
-    color: blue;
-    font-size: xx-large;
-    text-decoration: none;
+/* ── HOST ── */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 60px);
+  padding-bottom: 72px;
 }
-nav{
-    display: flex;
-    width: 75vw;
-    justify-content: space-between;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px 10px 20px 10px;
-    border-bottom: 3px solid #dce6e2;
-    border-radius: 100px;
-    flex-wrap: wrap;
-    align-items: center;
+
+/* ── HEADER ── */
+.header {
+  background: var(--black);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 3px solid var(--white);
 }
-button{
-    background-color: #2bd1b591;
-    font-size: 1.2rem;
-    padding: 20px;
-    border-radius: 10px;
-    font-weight: 800;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    width: fit-content;
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 40px;
 }
-button:hover{
-    background-color: aqua;
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  font-style: italic;
+  color: var(--white);
+  letter-spacing: -0.03em;
 }
-input[type="text"]{
-    outline: none;
-    padding: 10px;
-    font-size: 14px;
-    color: rgb(150, 150, 185);
-    font-weight: 700;
+
+.logo em {
+  font-style: italic;
 }
-.addlistContainer{
-    margin-top: 20px;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+
+.header-date {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #888;
 }
-.todoList{
-    display: flex;
-    flex-direction: column;
-    margin-right: auto;
-    margin-left: auto;
-    width: 75vw;
+
+/* ── HERO ── */
+.hero {
+  border-bottom: 1px solid var(--gray-5);
 }
-.todoList p{
-    font-size: larger;
-    font-family: 'Gill Sans', Calibri, 'Trebuchet MS', monospace;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
+
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 28px 40px 22px;
 }
-.todoList button{
-    margin-left: auto;
+
+.hero-eyebrow {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray-2);
+  margin-bottom: 8px;
+}
+
+.hero-counter {
+  font-family: var(--font-display);
+  font-size: 72px;
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.hero-sub {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gray-3);
+  margin-top: 8px;
+}
+
+/* ── TASK LIST ── */
+.task-list {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+  flex: 1;
+}
+
+/* ── DIVIDERS ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 0 12px;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: var(--gray-5);
+  transform-origin: center;
+}
+
+.divider-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--gray-3);
+  white-space: nowrap;
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  padding: 32px 0;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--gray-3);
+  font-style: italic;
+}
+
+/* ── TASK ROWS ── */
+.task-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--gray-6);
+  border-left: 2px solid transparent;
+  padding-left: 0;
+  transition:
+    transform 80ms ease-out,
+    border-left-color 80ms ease-out,
+    padding-left 80ms ease-out;
+  overflow: hidden;
+  position: relative;
+}
+
+.task-row:hover {
+  transform: translateX(-4px);
+  border-left-color: var(--black);
+  padding-left: 4px;
+}
+
+.task-row:hover .task-delete {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.task-row--done {
+  opacity: 0.45;
+}
+
+.task-row--done:hover {
+  transform: none;
+  border-left-color: transparent;
+  padding-left: 0;
+}
+
+/* ── TASK NUMBER ── */
+.task-num {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gray-4);
+  width: 24px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+/* ── TASK BODY ── */
+.task-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-title {
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--black);
+  line-height: 1.4;
+  position: relative;
+  display: inline-block;
+}
+
+.task-title .strikethrough {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: var(--black);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: none;
+}
+
+.task-row.completing .task-title .strikethrough {
+  transform: scaleX(1);
+  transition: transform 300ms ease-out;
+}
+
+.task-title--done {
+  color: var(--gray-3);
+  text-decoration: line-through;
+  text-decoration-color: var(--gray-3);
+}
+
+.task-note {
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--gray-1);
+  margin-top: 3px;
+  overflow-wrap: break-word;
+}
+
+.task-note--done {
+  color: var(--gray-3);
+}
+
+/* ── TASK META / DELETE ── */
+.task-meta-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.task-delete {
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--gray-3);
+  background: none;
+  border: none;
+  line-height: 1;
+  padding: 0 4px;
+  opacity: 0;
+  transform: translateX(8px);
+  transition:
+    opacity 100ms ease-out,
+    transform 100ms ease-out,
+    color 80ms ease;
+}
+
+.task-delete:hover {
+  color: var(--black);
+}
+
+/* ── OVERLAY ── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 200;
+  backdrop-filter: blur(2px);
+}
+
+/* ── ADD TASK SHEET ── */
+.sheet {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-radius: 16px 16px 0 0;
+  padding: 28px 40px 40px;
+  z-index: 300;
+  box-shadow: 0 -4px 40px rgba(0, 0, 0, 0.12);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sheet-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--gray-3);
+  background: none;
+  border: none;
+  line-height: 1;
+  padding: 4px 8px;
+  transition: color 80ms ease;
+}
+
+.sheet-close:hover {
+  color: var(--black);
+}
+
+.sheet-title-input {
+  font-family: var(--font-ui);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--black);
+  border: none;
+  outline: none;
+  border-bottom: 1px solid var(--gray-5);
+  padding-bottom: 12px;
+  transition: border-bottom-color 100ms ease;
+  width: 100%;
+}
+
+.sheet-title-input:focus {
+  border-bottom-color: var(--black);
+}
+
+.sheet-title-input::placeholder {
+  color: var(--gray-4);
+  font-weight: 400;
+}
+
+.sheet-note-input {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--gray-1);
+  border: none;
+  outline: none;
+  border-bottom: 1px solid var(--gray-6);
+  padding-bottom: 10px;
+  transition: border-bottom-color 100ms ease;
+  width: 100%;
+}
+
+.sheet-note-input:focus {
+  border-bottom-color: var(--gray-3);
+}
+
+.sheet-note-input::placeholder {
+  color: var(--gray-4);
+}
+
+.sheet-add-btn {
+  align-self: flex-end;
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  border-radius: 100px;
+  padding: 11px 26px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: transform 60ms ease, opacity 60ms ease;
+}
+
+.sheet-add-btn:active {
+  transform: scale(0.96);
+}
+
+/* ── BOTTOM ACTION BAR ── */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 40px;
+  z-index: 100;
+  max-width: 100%;
+  transition: background 150ms ease;
+}
+
+.bottom-bar:hover {
+  background: #1a1a1a;
+}
+
+.bottom-bar-label {
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+
+.bottom-bar-plus {
+  font-family: var(--font-ui);
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1;
+  display: inline-block;
 }
